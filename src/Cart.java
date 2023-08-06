@@ -49,5 +49,4 @@ public class Cart {
         return hasFreeShipping;
     }
 
-    // ... other methods ...
 }
