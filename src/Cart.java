@@ -37,10 +37,10 @@ public class Cart {
         }
 
         if (hasOnlyBooks) {
-            total *= 0.9;  // 10% discount for only books
+            total *= 0.9;
         }
 
-        total *= 1.05;  // 5% tax
+        total *= 1.05;
 
         return total;
     }
