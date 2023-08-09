@@ -36,10 +36,12 @@ public class Cart {
             }
         }
 
+        // Discount
         if (hasOnlyBooks) {
             total *= 0.9;
         }
 
+        // TVA
         total *= 1.05;
 
         return total;
