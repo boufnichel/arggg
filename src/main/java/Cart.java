@@ -26,31 +26,23 @@ public class Cart {
             return 0;
         }
 
+        double total = 0;
+        boolean hasOnlyBooks = true;
 
+        for (Product product : products) {
+            total += product.getPrice();
+            if (!product.isBook()) {
+                hasOnlyBooks = false;
+            }
+        }
 
-        double total = getTotalHT();
-
-        // Discount
-        if (hasOnlyBooks()) {
+        if (hasOnlyBooks) {
             total *= 0.9;
         }
 
-        // TVA
         total *= 1.05;
 
         return total;
-    }
-
-    private double getTotalHT() {
-        double total = 0;
-        for (Product product : products) {
-            total += product.getPrice();
-        }
-        return total;
-    }
-
-    public boolean hasOnlyBooks() {
-        return products.stream().anyMatch(Product::isBook);
     }
 
     public boolean hasFreeShipping() {
