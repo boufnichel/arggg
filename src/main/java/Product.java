@@ -7,12 +7,9 @@ import lombok.Data;
 @Builder
 public class Product {
     private double price;
-    @Builder.Default
-    private int stock = 0;
-    @Builder.Default
-    private boolean isSpecial = false;
-    @Builder.Default
-    private boolean isBook = false ;
+    private int stock;
+    private boolean isSpecial;
+    private boolean isBook;
 
     public void decreaseStock() {
         if (stock > 0) {
