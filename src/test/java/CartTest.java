@@ -17,7 +17,7 @@ class CartTest {
     void normal_price_should_be_applied_when_no_book_is_ordered() {
 
         Cart cart = new Cart();
-        Product product1 =  Product.builder().price(10).stock(1).build();
+        Product product1 =  TestDataBuilder.getProduct(10);
         cart.addProduct(product1);
         double totalPrice = cart.getTotalPrice();
         Assertions.assertEquals(10.5, totalPrice);
@@ -26,7 +26,7 @@ class CartTest {
     void discounted_price_should_be_applied_when_a_book_is_ordered() {
 
         Cart cart = new Cart();
-        Product product1 =  Product.builder().isBook(true).price(10).stock(1).build();
+        Product product1 =  TestDataBuilder.getBook(10);
         cart.addProduct(product1);
         double totalPrice = cart.getTotalPrice();
         Assertions.assertEquals(9.45, totalPrice);

@@ -1,13 +1,14 @@
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class Product {
     private double price;
-    private int stock;
+    private int stock ;
     private boolean isSpecial;
     private boolean isBook;
 
