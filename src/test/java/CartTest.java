@@ -31,4 +31,14 @@ class CartTest {
         double totalPrice = cart.getTotalPrice();
         Assertions.assertEquals(9.45, totalPrice);
     }
+
+    @Test
+    void discount_should_be_applied_when_a_total_over_or_equals_one_hundred() {
+
+        Cart cart = new Cart();
+        Product product1 =  TestDataBuilder.getProduct(100);
+        cart.addProduct(product1);
+        double totalPrice = cart.getTotalPrice();
+        Assertions.assertEquals(100, totalPrice);
+    }
 }
