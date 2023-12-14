@@ -24,13 +24,11 @@ class CartTest {
     }
     @Test
     void discounted_price_should_be_applied_when_a_book_is_ordered() {
-        double productPrice = 10;
-        double genericCoefficient = 1.05;
-        double booksCoefficient = 0.9;
+
         Cart cart = new Cart();
         Product product1 =  Product.builder().isBook(true).price(10).stock(1).build();
         cart.addProduct(product1);
         double totalPrice = cart.getTotalPrice();
-        Assertions.assertEquals(productPrice * genericCoefficient * booksCoefficient, totalPrice);
+        Assertions.assertEquals(9.45, totalPrice);
     }
 }
