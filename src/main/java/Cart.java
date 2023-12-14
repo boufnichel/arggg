@@ -6,6 +6,9 @@ public class Cart {
     private List<Product> products = new ArrayList<>();
     private boolean hasFreeShipping = false;
 
+    private static final double BOOKS_DISCOUNT_COEFFICIENT = 10;
+    public static final double TVA = 5;
+
     public void addProduct(Product product) {
         if (products.size() >= 100) {
             throw new IllegalStateException("Cart can't contain more than 100 items");
@@ -26,23 +29,23 @@ public class Cart {
             return 0;
         }
 
-        double total = 0;
-        boolean hasOnlyBooks = true;
+        double total = getSumPrice();
 
-        for (Product product : products) {
-            total += product.getPrice();
-            if (!product.isBook()) {
-                hasOnlyBooks = false;
-            }
+        if (hasOnlyBooks()) {
+            total = total - (total * BOOKS_DISCOUNT_COEFFICIENT) / 100;
         }
 
-        if (hasOnlyBooks) {
-            total *= 0.9;
-        }
-
-        total *= 1.05;
+        total = total + (total * TVA) / 100;
 
         return total;
+    }
+
+    private boolean hasOnlyBooks() {
+        return products.stream().allMatch(Product::isBook);
+    }
+
+    public double getSumPrice() {
+        return products.stream().mapToDouble(Product::getPrice).sum();
     }
 
     public boolean hasFreeShipping() {
