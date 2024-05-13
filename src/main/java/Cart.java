@@ -2,43 +2,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-    public static final int CART_MAX_CAPACITY = 100;
-    private final List<Product> products = new ArrayList<>();
-    private static final double BOOKS_DISCOUNT_COEFFICIENT = 10;
-    public static final double TVA = 5;
+
+    private List<Product> products = new ArrayList<>();
+    private boolean hasFreeShipping = false;
 
     public void addProduct(Product product) {
-        if (products.size() >= CART_MAX_CAPACITY) {
+        if (products.size() >= 100) {
             throw new IllegalStateException("Cart can't contain more than 100 items");
         }
 
         if (product.getStock() > 0) {
             products.add(product);
             product.decreaseStock();
+
+            if (product.isSpecial()) {
+                hasFreeShipping = true;
+            }
         }
     }
 
     public double getTotalPrice() {
-        double total = getSumPrice();
-
-        if (hasOnlyBooks()) {
-            total = applyDiscount(total);
+        if (products.isEmpty()) {
+            return 0;
         }
-        return applyTaxes(total);
+
+        double total = 0;
+        boolean hasOnlyBooks = true;
+
+        for (Product product : products) {
+            total += product.getPrice();
+            if (!product.isBook()) {
+                hasOnlyBooks = false;
+            }
+        }
+
+        if (hasOnlyBooks) {
+            total *= 0.9;
+        }
+
+        total *= 1.05;
+
+        return total;
     }
 
-    private double applyTaxes(double total) {
-        return total + (total * TVA) / 100;
-    }
-    private double applyDiscount(double total) {
-        return total - (total * BOOKS_DISCOUNT_COEFFICIENT) / 100;
-    }
-    private boolean hasOnlyBooks() {
-        return products.stream().allMatch(Product::isBook);
-    }
-
-    public double getSumPrice() {
-        return products.stream().mapToDouble(Product::getPrice).sum();
+    public boolean hasFreeShipping() {
+        return hasFreeShipping;
     }
 
 }

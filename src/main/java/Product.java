@@ -1,16 +1,18 @@
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class Product {
     private double price;
-    private int stock ;
-    private boolean isSpecial;
-    private boolean isBook;
+    @Builder.Default
+    private int stock = 0;
+    @Builder.Default
+    private boolean isSpecial = false;
+    @Builder.Default
+    private boolean isBook = false ;
 
     public void decreaseStock() {
         if (stock > 0) {
